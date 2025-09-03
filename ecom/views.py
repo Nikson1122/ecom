@@ -4,7 +4,7 @@ from.forms import SignUpForm, LoginForm
 
 
 def home(request):
-    return render(request, 'ecom/home.html')
+    return render(request, 'ecom/base.html')
 
 def signup(request):
     if request.method == 'POST':
