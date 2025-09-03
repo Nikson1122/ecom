@@ -1,0 +1,218 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #fafafa;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px; /* reduced padding from 20px to 16px */
+            color: #1f2937;
+        }
+
+        .signup-container {
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e5e7eb;
+            padding: 24px; /* reduced padding from 32px to 24px */
+        }
+
+        .card-title {
+            font-size: 22px; /* reduced from 24px to 22px */
+            font-weight: 600;
+            color: #111827;
+            text-align: center;
+            margin-bottom: 6px; /* reduced from 8px to 6px */
+        }
+
+        .card-subtitle {
+            font-size: 14px;
+            color: #6b7280;
+            text-align: center;
+            margin-bottom: 24px; /* reduced from 32px to 24px */
+        }
+
+        .form-group {
+            margin-bottom: 16px; /* reduced from 20px to 16px */
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 4px; /* reduced from 6px to 4px */
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 14px; /* reduced padding from 12px 16px to 10px 14px */
+            font-size: 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            background-color: #ffffff;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-control:hover {
+            border-color: #9ca3af;
+        }
+
+        /* hiding validation messages and help text */
+        .form-text {
+            display: none;
+        }
+
+        .text-danger {
+            display: none;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 10px 24px; /* reduced top/bottom padding from 12px to 10px */
+            font-size: 14px;
+            font-weight: 500;
+            color: #ffffff;
+            background-color: #111827;
+            border: 1px solid #111827;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 6px; /* reduced from 8px to 6px */
+        }
+
+        .btn-primary:hover {
+            background-color: #1f2937;
+            border-color: #1f2937;
+            transform: translateY(-1px);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px; /* reduced from 24px to 20px */
+            padding-top: 20px; /* reduced from 24px to 20px */
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .login-link p {
+            font-size: 14px;
+            color: #6b7280;
+            margin: 0;
+        }
+
+        .login-link a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .login-link a:hover {
+            color: #2563eb;
+            text-decoration: underline;
+        }
+
+        /* Responsive design */
+        @media (max-width: 480px) {
+            .card {
+                padding: 20px; /* reduced from 24px to 20px */
+            }
+            
+            .card-title {
+                font-size: 20px; /* reduced from 22px to 20px */
+            }
+
+            body {
+                padding: 12px; /* reduced mobile padding */
+            }
+        }
+
+        /* Form field styling for Django forms */
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px 14px; /* reduced padding to match form-control */
+            font-size: 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            background-color: #ffffff;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <div class="card">
+            <h1 class="card-title">Create your account</h1>
+            <p class="card-subtitle">Join us today and get started</p>
+
+            <form method="post">
+                {% csrf_token %}
+                
+                {% for field in form %}
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.help_text %}
+                            <div class="form-text">{{ field.help_text }}</div>
+                        {% endif %}
+                        {% for error in field.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+
+                <button type="submit" class="btn-primary">Create Account</button>
+            </form>
+
+            <div class="login-link">
+                <p>Already have an account? <a href="{% url 'login' %}">Sign in</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

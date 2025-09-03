@@ -14,9 +14,9 @@ def signup(request):
 
             login(request, user)
             return redirect('home')
-        else:
+    else:
             form = SignUpForm()
-            return render(request, 'ecom/signup.html', {'form': form})
+            return render(request, 'ecom/Signup.html', {'form': form})
         
 
 def Login(request):
