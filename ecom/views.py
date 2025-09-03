@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from.forms import SignUpForm
-# Create your views here.
+
+
 def home(request):
     return render(request, 'ecom/home.html')
 
