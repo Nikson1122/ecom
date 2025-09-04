@@ -8,6 +8,8 @@
     
     <!-- External CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;600;700&display=swap" rel="stylesheet">
+
     
     {% block extra_head %}{% endblock %}
 </head>
@@ -16,7 +18,7 @@
     <header>
         <nav class="navbar">
             <div class="container">
-                <a class="brand" href="{% url 'home' %}">E-Shop</a>
+                {% comment %} <a class="brand" href="{% url 'home' %}">Islington marketplace</a> {% endcomment %}
                 <ul class="nav-links">
                     <li><a href="">Home</a></li>
                     <li><a href="">Products</a></li>
@@ -28,18 +30,61 @@
         </nav>
     </header>
 
-    <!-- Main content -->
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+ <main>
+    {% block content %}
+ 
+<div class="hero-container">
+  <img class="slide" src="{% static 'images/sh.jpg' %}" alt="Store Image">
+  <img class="slide" src="{% static 'images/a.jpg' %}" alt="a">
+  <img class="slide" src="{% static 'images/b.jpg' %}" alt="b">
+  <img class="slide" src="{% static 'images/c.jpg' %}" alt="c">
 
-    <!-- Footer -->
+
+<img src="https://images.unsplash.com/photo-1593642634367-d91a135587b5?auto=format&fit=crop&w=800&q=80" alt="Storefront Items" width="600">
+
+
+
+
+
+  <div class="hero-text">
+    <span>Welcome to Islington Store</span>
+  </div>
+</div>
+    {% endblock %}
+</main>
+
+
     <footer>
+        
         <div class="container">
             &copy; {{ year|default:2025 }} E-Shop. All rights reserved.
         </div>
     </footer>
 
-    {% block extra_js %}{% endblock %}
+    {% block extra_js %}
+<script>
+let slides = document.querySelectorAll(".hero-container img");
+let index = 0;
+
+function showSlide() {
+    slides.forEach((slide, i) => {
+        slide.classList.remove("active");
+        if (i === index) {
+            slide.classList.add("active");
+        }
+    });
+    index = (index + 1) % slides.length;
+}
+
+showSlide(); // Show first slide
+setInterval(showSlide, 4000); // Change every 4 sec
+</script>
+{% endblock %}
+
+
+ 
 </body>
+
+
+
 </html>

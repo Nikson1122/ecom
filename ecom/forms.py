@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from .models import Product
 
 class SignUpForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -21,3 +22,8 @@ class LoginForm(forms.Form):
         required=True,
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'})
     )
+ 
+class Products(forms.Form):
+    class Meta:
+        model = Product
+        fields = ['name', 'price', 'description', 'image']
