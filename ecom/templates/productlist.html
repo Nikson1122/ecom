@@ -1,0 +1,26 @@
+{% extends "ecom/base.html" %}
+{% load static %}
+
+{% block title %}Products{% endblock %}
+
+{% block content %}
+<div class="container" style="margin-top: 50px;">
+    <h2 class="text-2xl font-bold mb-6">All Products</h2>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {% for product in product %}
+            <div class="border rounded-lg p-4 shadow hover:shadow-lg transition duration-300">
+                <img src="{{ product.photo.url }}" alt="{{ product.name }}" class="w-full h-48 object-cover rounded mb-4">
+                <h3 class="text-xl font-semibold mb-2">{{ product.name }}</h3>
+                <p class="text-gray-700 mb-2">${{ product.price }}</p>
+                {% if product.description %}
+                    <p class="text-gray-600 text-sm mb-2">{{ product.description }}</p>
+                {% endif %}
+                {% comment %} <p class="text-gray-800 font-medium">Quantity: {{ product.quantity }}</p> {% endcomment %}
+            </div>
+        {% empty %}
+            <p>No products found.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

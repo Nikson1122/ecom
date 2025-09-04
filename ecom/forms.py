@@ -23,7 +23,7 @@ class LoginForm(forms.Form):
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'})
     )
  
-class Products(forms.ModelForm):
+class ProductsForm(forms.ModelForm):
     class Meta:
         model = Products
         fields = ['name', 'price', 'description', 'photo']
