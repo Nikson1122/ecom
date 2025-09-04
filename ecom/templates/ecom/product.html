@@ -1,0 +1,67 @@
+{% extends "ecom/base.html" %}
+{% load static %}
+
+{% block title %}Add Product{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 450px; margin-top: 60px;">
+    <div style="background: #fff; padding: 30px 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.08);">
+        <h2 class="text-center" style="font-family: 'Lato', sans-serif; color: #6fb5ffff; margin-bottom: 25px; font-weight: 600;">Add New Product</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="text-center" style="margin-top: 20px;">
+                <button type="submit" style="
+                    background: #a2c2f9ff;
+                    color: #ffffffff;
+                    padding: 10px 30px;
+                    border: none;
+                    border-radius: 30px;
+                    font-size: 16px;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                ">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    body {
+        background: #f8f9fa; /* light neutral background */
+        font-family: 'Lato', sans-serif;
+    }
+
+    form p {
+        margin-bottom: 15px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="file"],
+    textarea,
+    select {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #e0e0e0;
+        border-radius: 12px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        background: #ffffff;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+        border-color: #6fd1ffff;
+        outline: none;
+        box-shadow: 0 0 8px rgba(255, 111, 145, 0.2);
+    }
+
+    button:hover {
+        background: #8fddffff;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(255, 111, 145, 0.2);
+    }
+</style>
+{% endblock %}

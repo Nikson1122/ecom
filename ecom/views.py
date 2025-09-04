@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from.forms import SignUpForm, LoginForm
+from.forms import SignUpForm, LoginForm, Products
 
 
 def home(request):
@@ -40,4 +40,24 @@ def Login(request):
 def Logout(request):
     logout(request)
     return redirect('login')
+
+from django.shortcuts import render
+from .forms import Products  # make sure this is your form
+
+def product(request):
+    if request.method == 'POST':
+        form = Products(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return render(request, 'orders.html')
+    else:
+    
+        form = Products()
+
+  
+    return render(request, 'ecom/product.html', {'form': form})
+
+        
+def orders(request):
+        return render(request, 'orders.html')
  
