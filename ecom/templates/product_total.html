@@ -1,0 +1,27 @@
+{% extends "ecom/base.html" %}
+
+{% block content %}
+<!-- product_detail.html -->
+<h2>{{ product.name }}</h2>
+<p>Price: $<span id="unit-price">{{ product.price }}</span></p>
+
+<form id="order-form">
+    <label for="quantity">Quantity:</label>
+    <input type="number" id="quantity" name="quantity" min="1" value="1">
+
+    <p>Total Price: $<span id="total-price">{{ product.price }}</span></p>
+
+    <button type="submit">Buy Now</button>
+</form>
+
+<script>
+const price = parseFloat(document.getElementById('unit-price').innerText);
+const quantityInput = document.getElementById('quantity');
+const totalPrice = document.getElementById('total-price');
+
+quantityInput.addEventListener('input', function() {
+    const qty = parseInt(this.value) || 0;
+    totalPrice.innerText = (qty * price).toFixed(2); // updates total price
+});
+</script>
+{% endblock %}

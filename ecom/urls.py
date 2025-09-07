@@ -12,6 +12,7 @@ urlpatterns = [
     path('product/', views.product, name='product'),
     path('orders/', views.orders, name='orders'),
     path('productlist/', views.product_list, name='productlist'),
+    path('product/<int:pk>/', views.product_detail, name='product_detail'),  
 ]
 
 if settings.DEBUG:

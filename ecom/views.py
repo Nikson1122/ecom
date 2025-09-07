@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from.forms import SignUpForm, LoginForm, ProductsForm
-
+from django.shortcuts import render, get_object_or_404
+from .models import Products
 
 def home(request):
     return render(request, 'ecom/base.html')
@@ -41,8 +42,7 @@ def Logout(request):
     logout(request)
     return redirect('login')
 
-from django.shortcuts import render
-from .forms import Products  # make sure this is your form
+ 
 
 def product(request):
     if request.method == 'POST':
@@ -61,6 +61,9 @@ def product_list(request):
     product= Products.objects.all()
     return render(request, 'productlist.html', {'product': product})
 
+def product_detail(request, pk):
+    product = get_object_or_404(Products, pk=pk)
+    return render(request, 'product_total.html', {'product': product})  
         
 def orders(request):
         return render(request, 'orders.html')
