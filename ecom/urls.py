@@ -13,6 +13,8 @@ urlpatterns = [
     path('orders/', views.orders, name='orders'),
     path('productlist/', views.product_list, name='productlist'),
     path('product/<int:pk>/', views.product_detail, name='product_detail'),  
+    path('initiate_payment/<int:product_id>/', views.initiate_payment, name='initiate_payment'),
+    # path('esewa/success/', views.esewa_success, name='esewa_success'),
 ]
 
 if settings.DEBUG:

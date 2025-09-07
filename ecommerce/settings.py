@@ -132,3 +132,16 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'          
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') 
+
+
+
+# eSewa Config (Test or Production)
+ESEWA_MERCHANT_ID = "EPAYTEST"
+
+ESEWA_MERCHANT_CODE = 'EPAYTEST'
+ESEWA_PRODUCT_CODE = 'EPAYTEST'
+ESEWA_SECRET_KEY = '8gBm/:&EnhH.1/q'  # Your plain text secret key (not base64 encoded)
+ESEWA_SUCCESS_URL = "https://developer.esewa.com.np/success"
+ESEWA_FAILURE_URL = "https://developer.esewa.com.np/failure"
+ESEWA_ENDPOINT = 'https://rc-epay.esewa.com.np/api/epay/main/v2/form'  # sandbox
+ESEWA_VERIFY_API = 'https://rc-epay.esewa.com.np/api/epay/transaction/status/'  # sandbox

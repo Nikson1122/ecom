@@ -85,7 +85,7 @@
 <div class="product-card">
     <h2>{{ product.name }}</h2>
     <p class="price">Price: $<span id="unit-price">{{ product.price }}</span></p>
-
+{% comment %} 
     <form id="order-form">
         <label for="quantity">Quantity:</label>
         <input type="number" id="quantity" name="quantity" min="1" value="1">
@@ -93,27 +93,57 @@
         <p class="total-price">Total Price: $<span id="total-price">{{ product.price }}</span></p>
 
         <button type="submit">Buy Now</button>
-    </form>
 
-    <button id="esewa-button">Pay with eSewa</button>
+ <button type="button" class="btn btn-success" 
+        onclick="window.location.href='{% url 'initiate_payment' product.id %}'">
+    Pay with eSewa
+</button>
+
+
+
+    </form>
+ {% endcomment %}
+
+ <form id="order-form" method="POST" action="{% url 'initiate_payment' product.id %}">
+    {% csrf_token %}
+    <!-- Quantity input -->
+    <input type="number" id="quantity" name="quantity" min="1" value="1">
+
+    <!-- Hidden input for total amount -->
+    <input type="hidden" id="totalAmountInput" name="total_amount" value="{{ product.price }}">
+
+    <!-- Submit button -->
+    <button type="submit" class="btn btn-success">Pay with eSewa</button>
+</form>
+
+
+
+
 </div>
 
 <script>
-const price = parseFloat(document.getElementById('unit-price').innerText);
-const quantityInput = document.getElementById('quantity');
-const totalPrice = document.getElementById('total-price');
-const orderForm = document.getElementById('order-form');
-const esewaButton = document.getElementById('esewa-button');
+document.addEventListener('DOMContentLoaded', function () {
+    const price = parseFloat(document.getElementById('unit-price').innerText);
+    const quantityInput = document.getElementById('quantity');
+    const totalPrice = document.getElementById('total-price');
+    const totalAmountInput = document.getElementById('totalAmountInput');
+    const orderForm = document.getElementById('order-form');
 
-quantityInput.addEventListener('input', function() {
-    const qty = parseInt(this.value) || 0;
-    totalPrice.innerText = (qty * price).toFixed(2);
+    // Update total price on quantity change
+    quantityInput.addEventListener('input', function () {
+        const qty = parseInt(this.value) || 0;
+        const total = qty * price;
+        totalPrice.innerText = total.toFixed(2);
+        totalAmountInput.value = total.toFixed(2);
+    });
+
+    // Ensure hidden input is updated before form submission
+    orderForm.addEventListener('submit', function () {
+        const qty = parseInt(quantityInput.value) || 0;
+        const total = qty * price;
+        totalAmountInput.value = total.toFixed(2);
+    });
 });
 
-// Show eSewa button on form submit
-orderForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    esewaButton.style.display = 'inline-block';
-});
 </script>
 {% endblock %}
