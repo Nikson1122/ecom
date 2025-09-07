@@ -79,7 +79,12 @@ def orders(request):
 @csrf_exempt
 def initiate_payment(request, product_id):
     product = Products.objects.get(id=product_id)
+    name = product
+    print("The product name is", name)
     amount = request.POST.get("total_amount") 
+    quantity = request.POST.get("quantity")
+    print("The quantity is", quantity)
+    
     print("The amount is" , amount)
     print("POST data:", request.POST)
 
@@ -110,6 +115,8 @@ def initiate_payment(request, product_id):
     }
 
     return render(request, 'esewa.html', context)
+
+
 
 
  
