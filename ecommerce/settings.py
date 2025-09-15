@@ -149,3 +149,6 @@ ESEWA_SUCCESS_URL = "https://developer.esewa.com.np/success"
 ESEWA_FAILURE_URL = "https://developer.esewa.com.np/failure"
 ESEWA_ENDPOINT = 'https://rc-epay.esewa.com.np/api/epay/main/v2/form'  # sandbox
 ESEWA_VERIFY_API = 'https://rc-epay.esewa.com.np/api/epay/transaction/status/'  # sandbox
+
+
+LOGIN_URL = '/login/' 

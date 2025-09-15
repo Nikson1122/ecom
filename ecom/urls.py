@@ -15,6 +15,7 @@ urlpatterns = [
     path('product/<int:pk>/', views.product_detail, name='product_detail'),  
     path('initiate_payment/<int:product_id>/', views.initiate_payment, name='initiate_payment'),
     path('esewa/success/', views.esewa_success, name='esewa_success'),
+    path('orderlist', views.orderlist, name='orderlist'),
 ]
 
 if settings.DEBUG:

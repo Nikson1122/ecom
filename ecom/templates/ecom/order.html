@@ -1,0 +1,39 @@
+{% extends "ecom/base.html" %}
+{% block content %}
+<h2>Orders</h2>
+
+<table border="1" cellspacing="0" cellpadding="10">
+    <thead>
+        <tr>
+            <th>S.N</th>
+            <th>Product</th>
+            {% comment %} <th>Transaction ID</th> {% endcomment %}
+            <th>Amount</th>
+            <th>Quantity</th>
+            <th>Status</th>
+            <th>Ordered By</th>
+            <th>Created At</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if orders %}
+            {% for order in orders %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ order.product.name }}</td>
+                    {% comment %} <td>{{ order.transcation_uuid }}</td> {% endcomment %}
+                    <td>{{ order.amount }}</td>
+                    <td>{{ order.quantity }}</td>
+                    <td>{{ order.status }}</td>
+                    <td>{{ order.user.username }}</td>
+                    <td>{{ order.created_at }}</td>  <!-- exact datetime -->
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="8" style="text-align:center;">No orders found.</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+{% endblock %}

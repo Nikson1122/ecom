@@ -10,6 +10,9 @@ from django.views.decorators.csrf import csrf_exempt
 import json, base64
 from django.http import HttpResponse
 
+from django.contrib.auth.decorators import login_required
+@login_required(login_url='/login/')  # Redirects to login if not authenticated
+
 def home(request):
     return render(request, 'ecom/base.html')
 
@@ -49,7 +52,7 @@ def Logout(request):
     return redirect('login')
 
  
-
+@login_required(login_url='/login/')
 def product(request):
     if request.method == 'POST':
         form = ProductsForm(request.POST, request.FILES)
@@ -63,14 +66,17 @@ def product(request):
   
     return render(request, 'ecom/product.html', {'form': form})
 
+@login_required(login_url='/login/')
 def product_list(request):
     product= Products.objects.all()
     return render(request, 'productlist.html', {'product': product})
 
+@login_required(login_url='/login/')
 def product_detail(request, pk):
     product = get_object_or_404(Products, pk=pk)
     return render(request, 'product_total.html', {'product': product})  
-        
+
+@login_required(login_url='/login/')        
 def orders(request):
         return render(request, 'orders.html')
 
@@ -160,7 +166,20 @@ def esewa_success(request):
         return render(request, 'ecom/esewasuccess.html')
     except Exception as e:
         return HttpResponse(f"Error processing payment: {str(e)}", status=500)
+    
+@login_required(login_url='/login/')
+def orderlist(request):
+    user = request.user
 
+    if user.is_staff:
+        orders = Payment.objects.all()
+
+    else:
+        orders= Payment.objects.filter(user=user)
+
+    context ={'orders': orders}
+
+    return render(request, 'ecom/order.html', context)
 
 
 
