@@ -156,7 +156,8 @@ def esewa_success(request):
 
 
         
-        return HttpResponse(f"Payment Success! Transaction: {transaction_code}")
+        # return HttpResponse(f"Payment Success! Transaction: {transaction_code}")
+        return render(request, 'ecom/esewasuccess.html')
     except Exception as e:
         return HttpResponse(f"Error processing payment: {str(e)}", status=500)
 
