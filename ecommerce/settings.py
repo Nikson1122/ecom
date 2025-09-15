@@ -133,6 +133,10 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'          
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') 
 
+TIME_ZONE = 'Asia/Kathmandu'
+USE_TZ = True
+
+
 
 
 # eSewa Config (Test or Production)

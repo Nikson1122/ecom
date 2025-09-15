@@ -89,7 +89,7 @@ def initiate_payment(request, product_id):
     print("POST data:", request.POST)
 
 
-    transaction_uuid = str(uuid.uuid4())  # fixed spelling
+    transaction_uuid = str(uuid.uuid4())  
     print("The transcation id is", transaction_uuid)
     signature = generate_esewa_signature(amount, transaction_uuid)
     print("The signature is", signature)
