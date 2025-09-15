@@ -2,13 +2,13 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from.forms import SignUpForm, LoginForm, ProductsForm
 from django.shortcuts import render, get_object_or_404
-from .models import Products
+from .models import Products, Payment
 import uuid
 from django.conf import settings
 from.utils import  generate_esewa_signature
 from django.views.decorators.csrf import csrf_exempt
-
-
+import json, base64
+from django.http import HttpResponse
 
 def home(request):
     return render(request, 'ecom/base.html')
@@ -95,6 +95,9 @@ def initiate_payment(request, product_id):
     print("The signature is", signature)
   
     print("The signature is", signature)
+
+    request.session["product_id"] = product.id
+    request.session["quantity"] = quantity
     success_url = request.build_absolute_uri('/esewa/success/')
     failure_url = request.build_absolute_uri('/esewa/failure/')
   
@@ -115,6 +118,47 @@ def initiate_payment(request, product_id):
     }
 
     return render(request, 'esewa.html', context)
+
+
+@csrf_exempt
+def esewa_success(request):
+    data = request.GET.get('data')
+
+    if not data:
+         return HttpResponse("Invalid response from eSewa", status=400)
+    
+    try:
+        payload = json.loads(base64.b64decode(data).decode())
+        transaction_code = payload.get("transaction_code")
+        status = payload.get("status")
+        total_amount = payload.get("total_amount")
+        transaction_uuid = payload.get("transaction_uuid")
+
+
+        # product_id = request.session.get("product_id")  
+
+        product_id = request.session.get("product_id")
+        print("The product id in success is", product_id)
+        if not product_id:
+            return HttpResponse("Product information missing. Cannot process payment.", status=400)
+
+        quantity = request.session.get("quantity", 1)
+        product = Products.objects.get(id=product_id)
+
+        Payment.objects.create(
+            user=request.user if request.user.is_authenticated else None,
+            product=product,
+            transcation_uuid=transaction_uuid,
+            amount=total_amount,
+            quantity=quantity,
+            status=status,
+        )
+
+
+        
+        return HttpResponse(f"Payment Success! Transaction: {transaction_code}")
+    except Exception as e:
+        return HttpResponse(f"Error processing payment: {str(e)}", status=500)
 
 
 
